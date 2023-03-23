@@ -1,10 +1,19 @@
-##A bash script which locates the ~/.bashrc file and Modifies the ~/.bashrc file values for HISTSIZE to HISTSIZE=10000 and HISTFILESIZE=2000.
+#A bash script which locates the ~/.bashrc file. Modifies the ~/.bashrc file values for HISTSIZE to HISTSIZE=10000 and HISTFILESIZE=2000. 
+#Saves the file and reset the bashrc by executing source ~/.bashrc in the command line.
 
 #!/bin/bash
 
-# locate the ~/.bashrc file
-BASHRC=~/.bashrc
+#Locate and modify ~/.bashrc
+HISTSIZE="HISTSIZE=10000"
+HISTFILESIZE="HISTFILESIZE=2000"
 
-# Modify the values
-sed -i 's/HISTSIZE=[0-9]*/HISTSIZE=10000/' $BASHRC
-sed -i 's/HISTFILESIZE=[0-9]*/HISTFILESIZE=2000/' $BASHRC
+if [ -f ~/.bashrc ]; then
+    echo "Found ~/.bashrc file"
+    echo "Modifying HISTSIZE and HISTFILESIZE values"
+    sed -i "s/HISTSIZE.*/$HISTSIZE/g" ~/.bashrc
+    sed -i "s/HISTFILESIZE.*/$HISTFILESIZE/g" ~/.bashrc
+    echo "Saving and resetting the ~/.bashrc file"
+    source ~/.bashrc
+else
+    echo "~/.bashrc file not found"
+fi
